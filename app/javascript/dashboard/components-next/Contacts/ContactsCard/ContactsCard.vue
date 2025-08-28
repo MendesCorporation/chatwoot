@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 
 import CardLayout from 'dashboard/components-next/CardLayout.vue';
 import ContactsForm from 'dashboard/components-next/Contacts/ContactsForm/ContactsForm.vue';
@@ -25,6 +26,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle', 'updateContact', 'showContact']);
 
 const { t } = useI18n();
+const { isAdmin } = useAdmin();
 
 const contactsFormRef = ref(null);
 
@@ -120,16 +122,16 @@ const onClickViewDetails = () => emit('showContact', props.id);
           </span>
         </div>
         <div class="flex flex-wrap items-center justify-start gap-x-3 gap-y-1">
-          <div v-if="email" class="truncate max-w-72" :title="email">
+          <div v-if="isAdmin && email" class="truncate max-w-72" :title="email">
             <span class="text-sm text-n-slate-11">
               {{ email }}
             </span>
           </div>
-          <div v-if="email" class="w-px h-3 truncate bg-n-slate-6" />
-          <span v-if="phoneNumber" class="text-sm truncate text-n-slate-11">
+          <div v-if="isAdmin && email" class="w-px h-3 truncate bg-n-slate-6" />
+          <span v-if="isAdmin && phoneNumber" class="text-sm truncate text-n-slate-11">
             {{ phoneNumber }}
           </span>
-          <div v-if="phoneNumber" class="w-px h-3 truncate bg-n-slate-6" />
+          <div v-if="isAdmin && phoneNumber" class="w-px h-3 truncate bg-n-slate-6" />
           <span
             v-if="countryDetails"
             class="inline-flex items-center gap-2 text-sm truncate text-n-slate-11"

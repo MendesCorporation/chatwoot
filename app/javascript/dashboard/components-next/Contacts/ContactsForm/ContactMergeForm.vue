@@ -2,6 +2,7 @@
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
 import { useI18n } from 'vue-i18n';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 
 defineProps({
   selectedContact: {
@@ -33,6 +34,7 @@ defineProps({
 const emit = defineEmits(['update:primaryContactId', 'search']);
 
 const { t } = useI18n();
+const { isAdmin } = useAdmin();
 </script>
 
 <template>
@@ -103,7 +105,7 @@ const { t } = useI18n();
           <span class="text-sm leading-4 truncate text-n-slate-11">
             {{ selectedContact.name }}
           </span>
-          <span class="text-sm leading-4 truncate text-n-slate-11">
+          <span v-if="isAdmin" class="text-sm leading-4 truncate text-n-slate-11">
             {{ selectedContact.email }}
           </span>
         </div>

@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 
 import { frontendURL } from 'dashboard/helper/URLHelper.js';
 import { dynamicTime } from 'shared/helpers/timeHelper';
@@ -52,6 +53,8 @@ const navigateTo = computed(() => {
   );
 });
 
+const { isAdmin } = useAdmin();
+
 const createdAtTime = dynamicTime(props.createdAt);
 
 const infoItems = computed(() => [
@@ -63,7 +66,7 @@ const infoItems = computed(() => [
   {
     label: 'SEARCH.EMAIL',
     value: props.email,
-    show: !!props.email,
+    show: isAdmin.value && !!props.email,
   },
   {
     label: 'SEARCH.EMAIL_SUBJECT',

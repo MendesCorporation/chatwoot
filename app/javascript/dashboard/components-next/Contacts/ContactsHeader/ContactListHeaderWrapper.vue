@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 import { useAlert, useTrack } from 'dashboard/composables';
 import { CONTACTS_EVENTS } from 'dashboard/helper/AnalyticsHelper/events';
 import filterQueryGenerator from 'dashboard/helper/filterQueryGenerator';
-import contactFilterItems from 'dashboard/routes/dashboard/contacts/contactFilterItems';
+import { getFilteredContactFilterTypes } from 'dashboard/routes/dashboard/contacts/contactFilterItems';
 import {
   DuplicateContactException,
   ExceptionWithMessage,
@@ -213,7 +213,7 @@ const onUpdateSegment = async (payload, segmentName) => {
 const setParamsForEditSegmentModal = () => {
   return {
     countries,
-    filterTypes: contactFilterItems,
+    filterTypes: getFilteredContactFilterTypes(),
     allCustomAttributes: useSnakeCase(contactAttributes.value),
   };
 };

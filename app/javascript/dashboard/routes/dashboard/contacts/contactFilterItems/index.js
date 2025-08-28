@@ -3,6 +3,7 @@ import {
   OPERATOR_TYPES_3,
   OPERATOR_TYPES_5,
 } from 'dashboard/components/widgets/FilterInput/FilterOperatorTypes.js';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 const filterTypes = [
   {
     attributeKey: 'name',
@@ -130,5 +131,35 @@ export const filterAttributeGroups = [
     ],
   },
 ];
+
+// Sensitive filter items that should be hidden from non-admin users
+const sensitiveFilterKeys = ['email', 'phone_number', 'identifier'];
+
+// Function to get filtered items based on admin status
+export const getFilteredContactFilterTypes = () => {
+  const { isAdmin } = useAdmin();
+  
+  if (isAdmin.value) {
+    return filterTypes;
+  }
+  
+  // Filter out sensitive items for non-admin users
+  return filterTypes.filter(item => !sensitiveFilterKeys.includes(item.attributeKey));
+};
+
+// Function to get filtered attribute groups based on admin status
+export const getFilteredContactFilterAttributeGroups = () => {
+  const { isAdmin } = useAdmin();
+  
+  if (isAdmin.value) {
+    return filterAttributeGroups;
+  }
+  
+  // Filter out sensitive attributes for non-admin users
+  return filterAttributeGroups.map(group => ({
+    ...group,
+    attributes: group.attributes.filter(attr => !sensitiveFilterKeys.includes(attr.key))
+  }));
+};
 
 export default filterTypes;

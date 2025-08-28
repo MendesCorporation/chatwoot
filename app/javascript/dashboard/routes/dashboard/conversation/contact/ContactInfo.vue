@@ -225,6 +225,7 @@ export default {
         </p>
         <div class="flex flex-col items-start w-full gap-2">
           <ContactInfoRow
+            v-if="isAdmin"
             :href="contact.email ? `mailto:${contact.email}` : ''"
             :value="contact.email"
             icon="mail"
@@ -233,6 +234,7 @@ export default {
             show-copy
           />
           <ContactInfoRow
+            v-if="isAdmin"
             :href="contact.phone_number ? `tel:${contact.phone_number}` : ''"
             :value="contact.phone_number"
             icon="call"
@@ -241,7 +243,7 @@ export default {
             show-copy
           />
           <ContactInfoRow
-            v-if="contact.identifier"
+            v-if="isAdmin && contact.identifier"
             :value="contact.identifier"
             icon="contact-identify"
             emoji="🪪"
@@ -281,6 +283,7 @@ export default {
           </template>
         </ComposeConversation>
         <VoiceCallButton
+          v-if="isAdmin"
           :phone="contact.phone_number"
           icon="i-ri-phone-fill"
           size="sm"

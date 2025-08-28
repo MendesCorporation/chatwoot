@@ -2,7 +2,7 @@ import wootConstants from 'dashboard/constants/globals';
 import { useStore } from 'dashboard/composables/store';
 import { useI18n } from 'vue-i18n';
 import { filterAttributeGroups as conversationFilterAttributeGroups } from 'dashboard/components/widgets/conversation/advancedFilterItems';
-import { filterAttributeGroups as contactFilterAttributeGroups } from 'dashboard/routes/dashboard/contacts/contactFilterItems';
+import { getFilteredContactFilterAttributeGroups } from 'dashboard/routes/dashboard/contacts/contactFilterItems';
 import * as OPERATORS from 'dashboard/components/widgets/FilterInput/FilterOperatorTypes.js';
 
 const customAttributeInputType = key => {
@@ -45,7 +45,7 @@ export const useFilter = ({ filteri18nKey, attributeModel }) => {
 
   const filterAttributeGroups =
     attributeModel === 'contact_attribute'
-      ? contactFilterAttributeGroups
+      ? getFilteredContactFilterAttributeGroups()
       : conversationFilterAttributeGroups;
 
   const setFilterAttributes = () => {
