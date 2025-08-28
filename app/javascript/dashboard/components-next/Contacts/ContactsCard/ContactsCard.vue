@@ -141,6 +141,7 @@ const onClickViewDetails = () => emit('showContact', props.id);
           </span>
           <div v-if="countryDetails" class="w-px h-3 truncate bg-n-slate-6" />
           <Button
+            v-if="isAdmin"
             :label="t('CONTACTS_LAYOUT.CARD.VIEW_DETAILS')"
             variant="link"
             size="xs"
@@ -151,6 +152,7 @@ const onClickViewDetails = () => emit('showContact', props.id);
     </div>
 
     <Button
+      v-if="isAdmin"
       icon="i-lucide-chevron-down"
       variant="ghost"
       color="slate"
@@ -159,7 +161,7 @@ const onClickViewDetails = () => emit('showContact', props.id);
       @click="onClickExpand"
     />
 
-    <template #after>
+    <template v-if="isAdmin" #after>
       <div
         class="transition-all duration-500 ease-in-out grid overflow-hidden"
         :class="
